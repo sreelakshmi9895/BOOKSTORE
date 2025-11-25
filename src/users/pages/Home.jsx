@@ -9,7 +9,7 @@ function Home() {
     <Header/>
      <div>
       {/* landing part-search */}
-      <div style={{height:'500px'}} className='flex justify-center items-center flex-col bg-[url(/bg-image.png)] bg-cover bg-center text-white'>
+      <div style={{height:'500px'}} className='flex justify-center items-center flex-col bg-[url(/bg-image-book.jpg)] bg-cover bg-center text-white'>
       <div style={{height:'500px',backgroundColor:'rgba(0,0,0,0.5)'}} className='w-full flex justify-center items-center flex-col '>
      <h1 className='text-5xl font-bold mb-2'>Wonderful Gifts</h1>
      <p>Gift Your Family and Friends a Book </p>
