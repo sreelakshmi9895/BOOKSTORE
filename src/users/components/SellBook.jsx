@@ -51,8 +51,8 @@ function SellBook() {
      </div>
         </div>
         <div className='flex justify-end mt-5'>
-        <button className='bg-gray-600' text-white p-2 rounded me-5 hover:bg-white hover:text-gray-400>RESET</button>
-        <button className='bg-blue-600' text-white p-2 rounded me-5 hover:bg-white hover:text-blue-400>SUBMIT</button>
+        <button className='bg-gray-600 text-white p-2 rounded me-5 hover:bg-white hover:text-gray-400' >RESET</button>
+        <button className='bg-blue-600 text-white p-2 rounded me-5 hover:bg-white hover:text-blue-400' >SUBMIT</button>
         </div>
      </div>
     </div>

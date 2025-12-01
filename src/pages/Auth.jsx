@@ -1,9 +1,29 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { FaEye, FaUser } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { ToastContainer,toast } from 'react-toastify'
 
 
 function Auth({insideRegister}) {
+
+const [viewPassword,setViewPassword] = useState(false)
+
+// store data from form
+const[userDetails,setUserDetails] = useState({
+  username:'',email:"",password:""
+})
+console.log(userDetails);
+
+const handleRegister = ()=>{
+const {username,email,password} = userDetails
+if(username && email && password){
+ toast.success("API Call")
+}else{
+  toast.info("please fill the form completely!!!")
+}
+}
+
+
   return (
     <div className='w-full min-h-screen flex justify-center items-center flex-col bg-[url(/Auth-bg.jpg)] bg-cover bg-center'>
      <div className='p-10'>
@@ -16,13 +36,13 @@ function Auth({insideRegister}) {
    <form className='my-5 w-full'>
     {/* username */}{
       insideRegister && 
-      <input type="text"  placeholder='Username' className='bg-white text-black placeholder-gray-400 w-full p-2 rounded mb-5'/>
+      <input value={userDetails.username} onChange={(e)=>setUserDetails({...userDetails,username:e.target.value})} type="text"  placeholder='Username' className='bg-white text-black placeholder-gray-400 w-full p-2 rounded mb-5'/>
     }
   {/* email */}
-  <input type="text"  placeholder='Email ID' className='bg-white text-black placeholder-gray-400 w-full p-2 rounded mb-5'/>
+  <input value={userDetails.email} onChange={(e)=>setUserDetails({...userDetails,email:e.target.value})}  type="text"  placeholder='Email ID' className='bg-white text-black placeholder-gray-400 w-full p-2 rounded mb-5'/>
   {/* password */}
   <div className='flex items-center'>
-    <input type="text"  placeholder='Password' className='bg-white text-black placeholder-gray-400 w-full p-2 rounded mb-5'/>
+    <input value={userDetails.password} onChange={(e)=>setUserDetails({...userDetails,password:e.target.value})}  type="text"  placeholder='Password' className='bg-white text-black placeholder-gray-400 w-full p-2 rounded mb-5'/>
     <FaEye className='text-gray-400 cursor-pointer' style={{marginLeft:'-30px',marginTop:'-20px'}}/>
     </div>
     {/* forgot password */}
@@ -37,7 +57,7 @@ function Auth({insideRegister}) {
     <div className='text-center'>
       {
         insideRegister?
-        <button type='button' className='bg-green-700 p-2 w-full rounded'>Register</button>
+        <button onClick={handleRegister} type='button' className='bg-green-700 p-2 w-full rounded'>Register</button>
         :
         <button type='button' className='bg-green-700 p-2 w-full rounded'>Login</button>
       }
@@ -54,6 +74,11 @@ function Auth({insideRegister}) {
    </form>
   </div>
      </div>
+     {/* toast */}
+     <ToastContainer
+position="top-center"
+autoClose={3000}
+theme="colored" />
     </div>
   )
 }

@@ -5,7 +5,7 @@ function Purchase() {
      <div className='p-10 my-20 mx-5 shadow rounded'>
       {/* book div duplicate  */}
       <div className='bg-gray-200 p-5 rounded'>
-   <div className='md:grid grid-cols-1[3fr_1fr]'>
+   <div className='md:grid grid-cols-[3fr_1fr]'>
     <div>
    <h2 className='text-2xl'>Title</h2>
    <h3 className='text-xl'>Author</h3>
