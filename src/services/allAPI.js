@@ -11,3 +11,9 @@ return await commonAPI("POST",`${serverURL}/register`,userDetails)
 export const loginAPI = async (userDetails)=>{
 return await commonAPI("POST",`${serverURL}/login`,userDetails)
 }
+
+// login api : called by Auth component when login btn clicked
+export const googleLoginAPI = async (userDetails)=>{
+return await commonAPI("POST",`${serverURL}/google/sign-in`,userDetails)
+}
+

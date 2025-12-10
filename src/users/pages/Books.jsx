@@ -103,7 +103,7 @@ function Books() {
       :
       <div className='w-full h-screen flex justify-center items-center flex-col'>
   {/* not login - book page  */}
-  <img src="https://i.pinimg.com/originals/eb/17/d0/eb17d0925c49ef13af6e84cdfeaad079.gif" alt="" />
+  <img className='w-100' src="https://i.pinimg.com/originals/eb/17/d0/eb17d0925c49ef13af6e84cdfeaad079.gif" alt="" />
   <p className='text-xl font-bold my-5'>Please<Link to={'/login'} className='underline text-blue-500'>Login</Link>to Explore More!!!</p>
       </div>
     
