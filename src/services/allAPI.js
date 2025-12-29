@@ -28,12 +28,28 @@ return await commonAPI("GET",`${serverURL}/books/home`,{})
 }
 
 // /books/all :bookpage api: called by books component when page loads - authorised user
-export const getAllBooksPageAPI = async (reqHeader)=>{
-return await commonAPI("GET",`${serverURL}/books/all`,{},reqHeader)
+export const getAllBooksPageAPI = async (reqHeader,searchKey)=>{
+return await commonAPI("GET",`${serverURL}/books/all?search=${searchKey}`,{},reqHeader)
 }
 
 
 // /user-books/all : Called by bookstatus when page load
 export const getAllUserBooksAPI = async (reqHeader)=>{
 return await commonAPI("GET",`${serverURL}/user-books/all`,{},reqHeader)
+}
+
+
+// /user-books/bought :get reqst  Called by purchase component  when it  loads
+export const getAllUserBoughtBooksAPI = async (reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/user-books/bought`,{},reqHeader)
+}
+
+//  /books/:id/view :get request by  view when page loads
+export const viewBookAPI = async (reqHeader,id)=>{
+return await commonAPI("GET",`${serverURL}/books/${id}/view`,{},reqHeader)
+}
+
+// /user/:id/edit : put request by Edit when update when btn click
+export const editUserAPI = async (id,reqBody,reqHeader)=>{
+return await commonAPI("PUT",`${serverURL}/users/${id}/edit`,reqBody,reqHeader)
 }

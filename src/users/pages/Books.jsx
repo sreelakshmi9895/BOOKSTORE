@@ -1,15 +1,19 @@
-import React , {useEffect, useState} from 'react'
+import React , {useContext, useEffect, useState} from 'react'
 import Header from '../components/Header'
 import Footer from '../../components/Footer'
 import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { getAllBooksPageAPI } from '../../services/allAPI'
+import { searchContext } from '../../contextAPI/ShareContext'
 
 
 function Books() {
+  const {searchKey,setSearchKey} = useContext(searchContext)
   const [showCategoryList,setShowCategoryList] = useState(false)
   const [token,setToken] = useState("")
   const [allBooks,setAllBooks]= useState([])
+  const[allCategory,setAllCategory] = useState([])
+  const[tempAllBooks,seTempAllBooks] = useState([])
 
   console.log(allBooks);
   
@@ -19,18 +23,32 @@ function Books() {
     setToken(userToken)
     getAllBooks(userToken)
   }
- },[]) 
+ },[searchKey]) 
 
  const getAllBooks = async (token)=>{
   const reqHeader = {
     "Authorization" : `Bearer ${token}`
   }
-  const result = await getAllBooksPageAPI(reqHeader)
+  const result = await getAllBooksPageAPI(reqHeader,searchKey)
   if(result.status==200){
     setAllBooks(result.data)
+    seTempAllBooks(result.data)
+    const tempAllCategory = result.data?.map(item=>item.category)
+    const tempCategorySet = new Set(tempAllCategory)
+    console.log([...tempCategorySet]);
+    setAllCategory([...tempCategorySet])
+    
   }else{
     console.log(result);
     
+  }
+ }
+
+ const filterBooks = (category)=>{
+  if(category=="all"){
+    setAllBooks(tempAllBooks)
+  }else{
+    setAllBooks(tempAllBooks?.filter(item=>item.category==category))
   }
  }
 
@@ -47,7 +65,7 @@ function Books() {
      <h1 className='text-3xl font-bold my-5'>All Books</h1>
      {/* search box */}
      <div className='flex my-5'>
-     <input type="text" placeholder='Search By Title' className='border p-2 border-gray-400 w-100' />
+     <input value={searchKey} onChange={e=>setSearchKey(e.target.value)} type="text" placeholder='Search By Title' className='border p-2 border-gray-400 w-100' />
      <button className='bg-black p-2 text-white'>Search</button>
      </div>
      
@@ -65,14 +83,18 @@ function Books() {
       <div className={showCategoryList?"block":'md:block hidden'}>
      {/* category 1 */}
      <div className='mt-3'>
-    <input type="radio" name='filter' id='all' />
+    <input onClick={()=>filterBooks("all")} type="radio" name='filter' id='all' />
     <label htmlFor="all" className='ms-3'>All</label>
      </div>
      {/* book category */}
-      <div className='mt-3'>
-    <input type="radio" name='filter' id='demo' />
-    <label htmlFor="all" className='ms-3'>Category name</label>
+     {
+      allCategory?.map((category,index)=>(
+    <div key={index} className='mt-3'>
+    <input onClick={()=>filterBooks(category)}  type="radio" name='filter' id={category} />
+    <label htmlFor={category} className='ms-3'>{category}</label>
      </div>
+      ))
+     }
       </div>
       </div>
      {/* book row */}
@@ -88,11 +110,11 @@ function Books() {
      <h3 className='text-blue-600 font-bold text-lg'>{book?.author}</h3>
      <h4 className='text-lg'>{book?.title.slice(0,9)}...</h4>
       <Link to={`/books/${book?._id}/view`} className='bg-black py-2 px-5 mt-2 text-white'>View</Link>
-  </div>
+  </div> 
    </div>
         ))
         :
-        <p className='font-bold'>Loading...</p>
+        <p className='font-bold'>Book Not Found.....</p>
       }
      
      </div>

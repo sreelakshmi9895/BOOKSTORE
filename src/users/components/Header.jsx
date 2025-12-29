@@ -1,13 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import { FaAddressCard, FaBars, FaFacebook, FaInstagram, FaPowerOff, FaTwitter, FaUser } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
- 
+import { Link, useNavigate } from 'react-router-dom'
+import serverURL from '../../services/serverURL'
+
+
 
 function Header() {
   const [listStatus,setListStatus] = useState(false)
 const [dp,setDp]= useState("")
 const [token,setToken] = useState("")
 const [dropDown,setDropDown] = useState(false)
+const navigate = useNavigate()
+     
 useEffect(()=>{
 if(sessionStorage.getItem("token")){
   const userToken = sessionStorage.getItem("token")
@@ -19,6 +23,15 @@ if(sessionStorage.getItem("token")){
 
 const menuBtnClick = ()=>{
   setListStatus(!listStatus)
+}
+
+const logout = ()=>{
+  sessionStorage.clear()
+  setToken("")
+  setDp("")
+  setDropDown(false)
+  setListStatus(false)
+  navigate('/')
 }
 
   return (
@@ -48,13 +61,13 @@ const menuBtnClick = ()=>{
   :
    <div className='relative inline-block text-left ms-2'> 
     <button onClick={()=>setDropDown(!dropDown)} className='w-full bg-white px-3 py-2 shadow hover:bg-gray-50'>
-    <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp :"https://img.freepik.com/premium-vector/business-woman-character-vector-illustration_1133257-2432.jpg?semt=ais_hybrid&w=740&q=80"}  alt="" />
+    <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp.startsWith("https://lh3.googleusercontent.com/")?dp :`${serverURL}/uploads/${dp}`:"https://img.freepik.com/premium-vector/business-woman-character-vector-illustration_1133257-2432.jpg?semt=ais_hybrid&w=740&q=80"} alt="" />
     </button>
     {
       dropDown &&
       <div className='absolute right-0 z-10 mt-2 w-40 rounded-md bg-white shadow-lg origin-top-right ring-1 ring-black/5 focus:outline-hidden'>
    <Link to={'user/profile'} className='px-4 py-2 text-sm text-gray-700 flex items-center'><FaAddressCard className='me-2'/>Profile</Link>
-   <button className='block px-4 py-2 text-sm text-gray-700 flex items-center'><FaPowerOff className='me-2'/>Logout</button>
+   <button onClick={logout} className='block px-4 py-2 text-sm text-gray-700 flex items-center'><FaPowerOff className='me-2'/>Logout</button>
     </div>
     }
    </div>
@@ -75,13 +88,13 @@ const menuBtnClick = ()=>{
   :
    <div className='relative inline-block text-left ms-2'> 
     <button onClick={()=>setDropDown(!dropDown)} className='w-full bg-white px-3 py-2 shadow hover:bg-gray-50'>
-    <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp :"https://img.freepik.com/premium-vector/business-woman-character-vector-illustration_1133257-2432.jpg?semt=ais_hybrid&w=740&q=80"} alt="" />
+    <img width={'40px'} height={'40px'} style={{borderRadius:'50%'}} src={dp?dp.startsWith("https://lh3.googleusercontent.com/")?dp :`${serverURL}/uploads/${dp}`:"https://img.freepik.com/premium-vector/business-woman-character-vector-illustration_1133257-2432.jpg?semt=ais_hybrid&w=740&q=80"} alt="" />
     </button>
     {
       dropDown &&
       <div className='absolute right-0 z-10 mt-2 w-40 rounded-md bg-white shadow-lg origin-top-right ring-1 ring-black/5 focus:outline-hidden'>
    <Link to={'user/profile'} className='px-4 py-2 text-sm text-gray-700 flex items-center'><FaAddressCard className='me-2'/>Profile</Link>
-   <button className='block px-4 py-2 text-sm text-gray-700 flex items-center'><FaPowerOff className='me-2'/>Logout</button>
+   <button onClick={logout} className='block px-4 py-2 text-sm text-gray-700 flex items-center'><FaPowerOff className='me-2'/>Logout</button>
     </div>
     }
    </div>
