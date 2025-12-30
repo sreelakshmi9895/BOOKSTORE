@@ -50,6 +50,28 @@ return await commonAPI("GET",`${serverURL}/books/${id}/view`,{},reqHeader)
 }
 
 // /user/:id/edit : put request by Edit when update when btn click
-export const editUserAPI = async (id,reqBody,reqHeader)=>{
-return await commonAPI("PUT",`${serverURL}/users/${id}/edit`,reqBody,reqHeader)
+export const editUserAPI = async (id, reqBody, reqHeader) => {
+  return await commonAPI("PUT", `${serverURL}/user/${id}/edit`, reqBody, reqHeader)
+}
+
+
+// /admin-books/all :bookpage api: called by adminResources component when page loads - authorised user
+export const getAllAdminBooksAPI = async (reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/admin-books/all`,{},reqHeader)
+}
+
+// /users/all : GET req by admin resources component when tab 2 is open
+export const getAllUsersAPI = async (reqHeader)=>{
+return await commonAPI("GET",`${serverURL}/users/all`,{},reqHeader)
+}
+
+
+// /books/69400c1c63d1345141eba27c/update PUT rqst by admincollection when approve btn clicked
+export const updateBookStatusAPI = async (id,reqHeader)=>{
+return await commonAPI("PUT",`${serverURL}/books/${id}/update`,{},reqHeader)
+}
+
+// books/:id :DELETE rqst by bookstatus component when delete btn clicked
+export const removeBookAPI = async (id,reqHeader)=>{
+return await commonAPI("DELETE",`${serverURL}/books/${id}`,{},reqHeader)
 }
