@@ -75,3 +75,8 @@ return await commonAPI("PUT",`${serverURL}/books/${id}/update`,{},reqHeader)
 export const removeBookAPI = async (id,reqHeader)=>{
 return await commonAPI("DELETE",`${serverURL}/books/${id}`,{},reqHeader)
 }
+
+// books/:id/buy :PUT rqst by view component when buy btn clicked
+export const purchaseBookAPI = async (id,reqHeader)=>{
+return await commonAPI("PUT",`${serverURL}/books/${id}/buy`,{},reqHeader)
+}

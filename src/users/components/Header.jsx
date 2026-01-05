@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import { FaAddressCard, FaBars, FaFacebook, FaInstagram, FaPowerOff, FaTwitter, FaUser } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import serverURL from '../../services/serverURL'
+import { routeGuardContext } from '../../contextAPI/AuthContext'
 
 
 
 function Header() {
-  const [listStatus,setListStatus] = useState(false)
+const {role,setAuthorised} = useContext(routeGuardContext)
+const [listStatus,setListStatus] = useState(false)
 const [dp,setDp]= useState("")
 const [token,setToken] = useState("")
 const [dropDown,setDropDown] = useState(false)
@@ -27,6 +29,7 @@ const menuBtnClick = ()=>{
 
 const logout = ()=>{
   sessionStorage.clear()
+  setAuthorised(false)
   setToken("")
   setDp("")
   setDropDown(false)

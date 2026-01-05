@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { getAllUserBoughtBooksAPI } from '../../services/allAPI';
-
+import { getAllUserBoughtBooksAPI } from "../../services/allAPI"
 
 function Purchase() {
 
   const [userBoughtBooks,setUserBoughtBooks] = useState([])
   console.log(userBoughtBooks);
 
-  useEffect(()=>{
-    getAllUserBoughtBooksAPI()
-  },[])
+ useEffect(() => {
+  getUserBoughtBooks()
+}, [])
+
   
    const getUserBoughtBooks = async ()=>{
       const token = sessionStorage.getItem("token")
@@ -17,7 +17,8 @@ function Purchase() {
         const reqHeader = {
           "Authorization" : `Bearer ${token}`
         }
-        const result = await getUserBoughtBooks (reqHeader)
+        const result = await getAllUserBoughtBooksAPI(reqHeader)
+
         if(result.status==200){
           setUserBoughtBooks(result.data)
         }else{

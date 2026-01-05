@@ -5,20 +5,21 @@ import { FaBackward, FaCamera, FaEye } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { FaX } from 'react-icons/fa6'
 import serverURL from '../../services/serverURL'
-import { viewBookAPI } from '../../services/allAPI'
-
+import { purchaseBookAPI, viewBookAPI } from '../../services/allAPI'
+import {loadStripe} from '@stripe/stripe-js';
 
 function View() {
   const { id } = useParams()
   const [book, setBook] = useState({})
   const [modalStatus,setModalStatus] = useState(false)
 
-  console.log(book);
+  // console.log(book);
   
 
   useEffect(() => {
     getBookDetails()
   }, [id])
+
 
   const getBookDetails = async () => {
   const token = sessionStorage.getItem("token")
@@ -35,6 +36,28 @@ function View() {
       }
     }
   }
+
+const makePayment = async () => {
+  const stripe = await loadStripe('pk_test_51SkSthGYPN23dmK7IfP3kPSVlsJ9BITei0OXvUaieWVQGOgCcunCBEuR5pZe1EtzNxPwGXEaNUeoG8X19kt5RCU700CME0nDZJ')
+
+  const token = sessionStorage.getItem("token")
+
+  if (token) {
+    const reqHeader = {
+      Authorization: `Bearer ${token}`
+    }
+
+    // IMPORTANT: send only the ID here
+    const result = await purchaseBookAPI(book._id, reqHeader)
+
+    if (result.status === 200) {
+      const { checkoutURL } = result.data
+      window.location.href = checkoutURL
+    } else {
+      console.log(result)
+    }
+  }
+}
 
   return (
     <>
@@ -70,7 +93,7 @@ function View() {
 </div>
 <div className='flex justify-end'>
 <Link to={'/books'} className='bg-blue-700 p-2 text-white flex-items-center rounded'><FaBackward className='me-2'/>Back</Link>
-<button className='bg-green-700 p-2 rounded text-white ms-5'>₹ {book?.discountPrice}</button>
+<button onClick={makePayment} className='bg-green-700 p-2 rounded text-white ms-5'>Buy $ {book?.discountPrice}</button>
 </div>
 </div>
  </div>
